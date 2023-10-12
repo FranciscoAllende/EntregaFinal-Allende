@@ -1,153 +1,93 @@
-// Hola profe! El proyecto que elegí es un menú de compras de productos fitness, con precios, métodos de pago y descuentos. (Mi proyecto anterior de Desarrollo Web tenía que ver con una página de un gimnasio, es probable que lo continúe)
-
-
-// usuario //
+// - - - Usuario - - - //
 let nombreUsuario = prompt('Bienvenidx a CoderFitness. Ingrese su nombre.');
 
-// variables de productos
-let proteina1 = 'Proteína Star';
-let creatina1 = 'Creatina Star';
-let preentreno1 = 'Preentreno C4';
-let massgainer1 = 'Mass Gainer';
-
-// variables financieras
-let precioProteina1 = 33000;
-let precioCreatina1 = 17000;
-let precioPreentreno1 = 60000;
-let precioMassgainer1 = 15000;
+// - - - Productos y precios - - - //
+let productos = [
+   {
+        nombre: 'Proteína Star',
+        precio: 33000,
+    },
+    {
+        nombre: 'Creatina Star',
+        precio: 17000,
+    },
+    {
+        nombre: 'Preentreno C4',
+        precio: 60000,
+    },
+    {
+        nombre: 'Mass Gainer',
+        precio: 15000,
+    },
+];
+// - - - Variables financieras - - - //
 let descuentoEfectivo = 0.80;
-let descuentoMercadoPago = 0.85;
 let descuentoTarjeta = 0.90;
+let descuentoMercadoPago = 0.85;
 
-let precioFinalTarjeta, precioFinalMercadoPago, precioFinalEfectivo;
+const calcularDescuento = (precio, descuento) => {
+    return precio * descuento;
+};
 
-// variables para cálculos
-const calcularDescuento = (a, b) => {
-    return a * b;
+let productosAdquiridos = [];
+
+while (true) {
+    let opciones = 'Bienvenidx, ' + nombreUsuario + '. ¿Cuál de nuestros productos te interesa?\n';
+
+    for (let i = 0; i < productos.length; i++) {
+        opciones += (i + 1) + ' - ' + productos[i].nombre + ' - U$S ' + productos[i].precio + '\n';
+    }
+
+    opciones += (productos.length + 1) + ' - Finalizar selección de productos';
+    let opcionProducto = prompt(opciones);
+
+    if (opcionProducto >= 1 && opcionProducto <= productos.length) {
+        let productoElegido = productos[opcionProducto - 1];
+        let metodoPago;
+
+        do {
+            let mensajeProducto = 'Elegiste ' + productoElegido.nombre + ' y su precio es U$S ' + productoElegido.precio;
+            mensajeProducto += '\nElige un método de pago.\n1 - Efectivo (20% OFF)\n2 - Mercado Pago (15% OFF)\n3 - Tarjeta Débito/Crédito (10% OFF)\n4 - Volver al menú principal';
+            metodoPago = prompt(mensajeProducto);
+
+            switch (metodoPago) {
+                case '1':
+                    let precioFinalEfectivo = calcularDescuento(productoElegido.precio, descuentoEfectivo).toFixed(2);
+                    alert('Eligió pagar con efectivo. El precio final es U$S ' + precioFinalEfectivo);
+                    alert('¡Felicitaciones! Se realizó correctamente la compra de tu producto: ' + productoElegido.nombre);
+                    productosAdquiridos.push(productoElegido);
+                    break;
+                case '2':
+                    let precioFinalMercadoPago = calcularDescuento(productoElegido.precio, descuentoMercadoPago).toFixed(2);
+                    alert('Elegió pagar con Mercado Pago. El precio final es U$S ' + precioFinalMercadoPago);
+                    alert('¡Felicitaciones! Se realizó correctamente la compra de tu producto: ' + productoElegido.nombre);
+                    productosAdquiridos.push(productoElegido);
+                    break;
+                case '3':
+                    let precioFinalTarjeta = calcularDescuento(productoElegido.precio, descuentoTarjeta).toFixed(2);
+                    alert('Eligió pagar con tarjeta débito/crédito. El precio final es U$S ' + precioFinalTarjeta);
+                    alert('¡Felicitaciones! Se realizó correctamente la compra de tu producto: ' + productoElegido.nombre);
+                    productosAdquiridos.push(productoElegido);
+                    break;
+                case '4':
+                    break;
+                default:
+                    alert('Opción no válida. Por favor seleccioná una opción válida.');
+            }
+        } while (metodoPago !== '4');
+    } else if (opcionProducto == productos.length + 1) {
+        break;
+    } else {
+        alert('Opción no válida. Por favor, seleccioná una opción válida.');
+    }
 }
 
-let opcionesFitness;
-
-
-do {
-    opcionesFitness = prompt('Bienvenidx, ' + nombreUsuario + ', ¿qué producto le interesa? \n1 - ' + proteina1 + '\n2 - ' + creatina1 + '\n3 - ' + preentreno1 + '\n4 - ' + massgainer1 + '\n5 - Salir del menú de compras');
-
-    switch (opcionesFitness) {
-        case '1':
-            let metodoPago1;
-            do {
-                metodoPago1 = prompt('Eligió ' + proteina1 + ' y su precio es de U$S' + precioProteina1 + '. Elegí un método de pago. \n1 - Tarjeta Débito/Crédito (10% OFF) \n2 - Mercado Pago (15% OFF) \n3 - Efectivo (20% OFF) \n4 - Volver');
-                switch (metodoPago1) {
-                    case '1':
-                        precioFinalTarjeta = calcularDescuento(precioProteina1, descuentoTarjeta);
-                        alert('Eligió pagar con tarjeta de débito/crédito. El precio final es U$S ' + precioFinalTarjeta);
-                        alert('¡Felicitaciones! ¡Se realizó correctamente la compra de tu producto! ' + proteina1);
-                        break;
-                    case '2':
-                        precioFinalMercadoPago = calcularDescuento(precioProteina1, descuentoMercadoPago);
-                        alert('Eligió pagar con Mercado Pago. El precio final es U$S ' + precioFinalMercadoPago);
-                        alert('¡Felicitaciones! ¡Se realizó correctamente la compra de tu producto! ' + proteina1);
-                        break;
-                    case '3':
-                        precioFinalEfectivo = calcularDescuento(precioProteina1, descuentoEfectivo);
-                        alert('Eligió pagar con Efectivo. El precio final es U$S ' + precioFinalEfectivo);
-                        alert('¡Felicitaciones! ¡Se realizó correctamente la compra de tu producto! ' + proteina1);
-                        break;
-                    case '4':
-                        break;
-                    default:
-                        alert('Opción no válida. Por favor seleccioná una opción válida.');
-                }
-            } while (metodoPago1 !== '4'); 
-            break;
-
-        case '2':
-            let metodoPago2;
-            do {
-                metodoPago2 = prompt('Eligió ' + creatina1 + ' y su precio es de U$S ' + precioCreatina1 + '. Elegí un método de pago. \n1 - Tarjeta Débito/Crédito (10% OFF) \n2 - Mercado Pago (15% OFF) \n3 - Efectivo (20% OFF) \n4 - Volver');
-                switch (metodoPago2) {
-                    case '1':
-                        precioFinalTarjeta = calcularDescuento(precioCreatina1, descuentoTarjeta);
-                        alert('Eligió pagar con tarjeta de débito/crédito. El precio final es U$S ' + precioFinalTarjeta);
-                        alert('¡Felicitaciones! ¡Se realizó correctamente la compra de tu producto! ' + creatina1);
-                        break;
-                    case '2':
-                        precioFinalMercadoPago = calcularDescuento(precioCreatina1, descuentoMercadoPago);
-                        alert('Eligió pagar con Mercado Pago. El precio final es U$S ' + precioFinalMercadoPago);
-                        alert('¡Felicitaciones! ¡Se realizó correctamente la compra de tu producto! ' + creatina1);
-                        break;
-                    case '3':
-                        precioFinalEfectivo = calcularDescuento(precioCreatina1, descuentoEfectivo);
-                        alert('Eligió pagar con Efectivo. El precio final es U$S ' + precioFinalEfectivo);
-                        alert('¡Felicitaciones! ¡Se realizó correctamente la compra de tu producto! ' + creatina1);
-                        break;
-                    case '4':
-                        break;
-                    default:
-                        alert('Opción no válida. Por favor seleccioná una opción válida.');
-                }
-            } while (metodoPago2 !== '4'); 
-            break;
-
-        case '3':
-            let metodoPago3;
-            do {
-                metodoPago3 = prompt('Eligió ' + preentreno1 + ' y su precio es de U$S ' + precioPreentreno1 + '. Elegí un método de pago. \n1 - Tarjeta Débito/Crédito (10% OFF) \n2 - Mercado Pago (15% OFF) \n3 - Efectivo (20% OFF) \n4 - Volver');
-                switch (metodoPago3) {
-                    case '1':
-                        precioFinalTarjeta = calcularDescuento(precioPreentreno1, descuentoTarjeta);
-                        alert('Eligió pagar con tarjeta de débito/crédito. El precio final es de U$S ' + precioFinalTarjeta);
-                        alert('¡Felicitaciones! ¡Se realizó correctamente la compra de tu producto! ' + preentreno1);
-                        break;
-                    case '2':
-                        precioFinalMercadoPago = calcularDescuento(precioPreentreno1, descuentoMercadoPago);
-                        alert('Eligió pagar con Mercado Pago. El precio final es de U$S ' + precioFinalMercadoPago);
-                        alert('¡Felicitaciones! ¡Se realizó correctamente la compra de tu producto! ' + preentreno1);
-                        break;
-                    case '3':
-                        precioFinalEfectivo = calcularDescuento(precioPreentreno1, descuentoEfectivo);
-                        alert('Eligió pagar con efectivo. El precio final es de U$S ' + precioFinalEfectivo);
-                        alert('¡Felicitaciones! ¡Se realizó correctamente la compra de tu producto! ' + preentreno1);
-                        break;
-                    case '4':
-                        break;
-                    default:
-                        alert('Opción no válida. Por favor seleccioná una opción válida.');
-                }
-            } while (metodoPago3 !== '4'); 
-            break;
-
-        case '4':
-            let metodoPago4;
-            do {
-                metodoPago4 = prompt('Eligió ' + massgainer1 + ' y su precio es de U$S ' + precioMassgainer1 + '. Elegí un método de pago. \n1 - Tarjeta Débito/Crédito (10% OFF) \n2 - Mercado Pago (15% OFF) \n3 - Efectivo (20% OFF) \n4 - Volver');
-                switch (metodoPago4) {
-                    case '1':
-                        precioFinalTarjeta = calcularDescuento(precioMassgainer1, descuentoTarjeta);
-                        alert('Eligió pagar con tarjeta de débito/crédito. El precio final es de U$S ' + precioFinalTarjeta);
-                        alert('¡Felicitaciones! ¡Se realizó correctamente la compra de tu producto! ' + massgainer1);
-                        break;
-                    case '2':
-                        precioFinalMercadoPago = calcularDescuento(precioMassgainer1, descuentoMercadoPago);
-                        alert('Eligió pagar con Mercado Pago. El precio final es de U$S ' + precioFinalMercadoPago);
-                        alert('¡Felicitaciones! ¡Se realizó correctamente la compra de tu producto! ' + massgainer1);
-                        break;
-                    case '3':
-                        precioFinalEfectivo = calcularDescuento(precioMassgainer1, descuentoEfectivo);
-                        alert('Eligió pagar con efectivo. El precio final es de U$S ' + precioFinalEfectivo);
-                        alert('¡Felicitaciones! ¡Se realizó correctamente la compra de tu producto! ' + massgainer1);
-                        break;
-                    case '4':
-                        break;
-                    default:
-                        alert('Opción no válida. Por favor seleccioná una opción válida.');
-                }
-            } while (metodoPago4 !== '4'); 
-            break;
-
-        case '5':
-            break;
-        default:
-            alert('Opción no válida. ¡Por favor, seleccioná una opción válida!');
+if (productosAdquiridos.length > 0) {
+    let mensajeProductosAdquiridos = 'Productos adquiridos por ' + nombreUsuario + ':\n';
+    for (let i = 0; i < productosAdquiridos.length; i++) {
+        mensajeProductosAdquiridos += productosAdquiridos[i].nombre + '\n';
     }
-} while (opcionesFitness !== '5');
+    alert(mensajeProductosAdquiridos);
+} else {
+    alert('No compró ningún producto en esta sesión.');
+}
