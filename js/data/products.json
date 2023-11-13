@@ -1,0 +1,26 @@
+[
+    {
+      "id": 1,
+      "product": "Proteína Star",
+      "thumbnail": "./images/productouno.png",
+      "price": 33000
+    },
+    {
+      "id": 2,
+      "product": "Creatina Star",
+      "thumbnail": "./images/productodos.png",
+      "price": 17000
+    },
+    {
+      "id": 3,
+      "product": "Preentreno C4",
+      "thumbnail": "./images/productotres.png",
+      "price": 60000
+    },
+    {
+      "id": 4,
+      "product": "Mass Gainer",
+      "thumbnail": "./images/productocuatro.png",
+      "price": 15000
+    }
+  ]
